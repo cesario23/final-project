@@ -1,9 +1,9 @@
-import React, {useContext, useEffect} from 'react'
+import React, {useContext} from 'react'
 import {makeStyles} from '@material-ui/core/styles'
 import {AppBar, Toolbar, Typography, Button} from '@material-ui/core'
 import {NavLink, Link} from 'react-router-dom'
 import {withRouter} from 'react-router-dom'
-
+import {AuthContext} from '../../Context/AuthContext'
 
 const useStyles = makeStyles((theme) =>({
     root: {
@@ -21,10 +21,14 @@ function Navbar() {
 
     const classes = useStyles();
     const{
-        state:{user},
-        dispatch,
-    } = useContext()
+        state: {user},
+    } = useContext(AuthContext)
 
+    const isUserLoggedIn = user ? true : false;
+    const navLinkTitleOne = isUserLoggedIn ? "/profile" : "/login";
+    const navLinkDisplayOne = isUserLoggedIn ? `${user.email}` : "login";
+    const navLinkTitleTwo = isUserLoggedIn ? "/logout" : "/sign-up";
+    const navLinkDisplayTwo = isUserLoggedIn ? "logout" : "sign up"
     
 
     return (
@@ -35,15 +39,15 @@ function Navbar() {
                         <Link to="/">Home</Link>
                     </Typography>
 
-                    <NavLink activeStyle={{color:"red"}} exact to= "/login">
+                    <NavLink activeStyle={{color:"red"}} exact to= {navLinkTitleOne}>
                         <Button color="inherit" style={{color: "white"}}>
-                            Sign in
+                            {navLinkDisplayOne}
                         </Button>
                     </NavLink>
 
-                    <NavLink activeStyle={{color:"red"}} exact to= "signup">
+                    <NavLink activeStyle={{color:"red"}} exact to= {navLinkTitleTwo}>
                         <Button color="inherit" style={{color: "white"}}>
-                            Sign up
+                           {navLinkDisplayTwo}
                         </Button>
                     </NavLink>
                 </Toolbar>

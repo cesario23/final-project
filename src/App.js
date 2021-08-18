@@ -1,19 +1,20 @@
 import React from 'react'
 import {BrowserRouter as Router} from 'react-router-dom';
-import MainRouter from './MainRouter';
-import ContextWrapper from './Contex/context'
+import MainRouter from './MainRouter'
+import AuthContextWrapper from './Context/AuthContext'
 import './App.css';
 
 
 function App() {
   return (
+   <React.Suspense fallback="loading">
     <Router>
-      <ContextWrapper>
+      <AuthContextWrapper>
         <MainRouter/>
-      </ContextWrapper>
-    </Router>
-    
-  );
+      </AuthContextWrapper>
+      </Router>
+    </React.Suspense>
+  )
 }
 
 export default App;
