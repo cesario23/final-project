@@ -11,21 +11,25 @@ function Home() {
     function onChange(e){
      let value = e.target.value
      setSearch(value)
-     console.log(search)
     }
 
-    async function handleAnimeFetch(value){
+    
+    async function handleAnimeFetch(anime){
         try{
-      let searchAnime = await axios.get()
+      let searchAnime = await axios.get(`https:api.jikan.moe/v3/search/anime?q=${anime}&order_by=title&sort=asc&limit=10`)
+      console.log(searchAnime.data.results)
+      setAnimeList(searchAnime.data.results)
+    
         }catch(e){
             console.log(e)
         }
    
     }
 
-    async function handleOnClick(e){
-         e.preventDefault();
-         console.log("click")
+    function handleOnClick (e) {
+        e.preventDefault();
+
+        handleAnimeFetch(search)
     }
 
 
@@ -38,11 +42,20 @@ function Home() {
             <input
             type= "text"
             id="anime"
+            key=""
             placeholder="search for an anime...."
+            value={search}
             onChange = {onChange}
 
             />
             <button onClick={handleOnClick}>Search</button>
+            </div>
+            <div className= "list">
+                {animeList.map(anime => (
+                    <div className="anime-card">
+                      {anime.title}
+                    </div>
+                    ))}
             </div>
         </div>
     )

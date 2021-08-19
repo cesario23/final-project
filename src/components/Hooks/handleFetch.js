@@ -3,7 +3,7 @@ import axios from 'axios';
 import {AuthContext} from '../../Context/AuthContext';
 
 
-function handleFetch(url) {
+function HandleFetch(url) {
     const baseURL =
     process.env.NODE_ENV === "development"
     ? "http://localhost:3000/api"
@@ -43,11 +43,27 @@ function handleFetch(url) {
                    authorization: null,
                },
            } ,
-        },
+        }
 
         try{
             let response = await axios(baseURL + url, requestOptionObj);
-            console.log(response)
+            console.log(response);
+
+            if(response.data.message === "user created"){
+                setResponse(response.data.message);
+                setIsLoading(false);
+                handleMessageOpen();
+                setSuccessMessage(response.data.message);
+            }else{
+                setIsLoading(false);
+                dispatch({
+                    type: "LOGIN",
+                    user: {
+                        email: response.data.user.email,
+                        username: response.data.user.username,
+                    }
+                })
+            }
         } catch(e){
             setError(e.response.data.message);
             setIsLoading(false);
@@ -55,10 +71,21 @@ function handleFetch(url) {
         }
     }
     
+    useEffect(() =>{
+        if(!isLoading){
+            return;
+        }
+        handleAPIFetch();
+    },[isLoading, url, options, baseURL]);
 
-   
-
-    return 
+    return [
+        {isLoading, response, error, setError, setResponse},
+        handleAPICallSubmit,
+        isMessageOpen,
+        handleMessageOpen,
+        handleMessageClose,
+        successMessageValue,
+    ]; 
 }
 
-export default handleFetch
+export default HandleFetch

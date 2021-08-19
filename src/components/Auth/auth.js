@@ -1,10 +1,19 @@
 import React from 'react'
 import ChangeInput from '../../components/Hooks/Inputs'
+import HandleFetch from '../Hooks/handleFetch'
 
 function auth(props) {
 
     let isLoginRoute = props.match.path === "/login"
     let buttonTitle = isLoginRoute ? "Login" : "Sing up";
+    let apiURL = isLoginRoute ? "/users/login" : "/users/create-user"
+
+    const [ {isLoading, response, error, setError, setResponse},
+        handleAPICallSubmit,
+        isMessageOpen,
+        handleMessageOpen,
+        handleMessageClose,
+        successMessageValue,] = HandleFetch()
 
     const [firstName, handleFirstNameChange, firstNameIsError, firstNameErrorMessage, isFirstNameDisabled, clearFirstNameInput ] = ChangeInput("firstName");
     const [lastName, handleLastNameChange, lastNameIsError, lastNameErrorMessage, isLastNameDisabled, clearLastNameInput] = ChangeInput("lastName");
@@ -17,17 +26,24 @@ function auth(props) {
         e.preventDefault();
        
        const user = isLoginRoute
-       ? {email, password}
-       : {firstName, lastName, email, username, password,}
+       ? {email,username, password}
+       : {firstName, lastName, email, username, password, confirmPassword}
+      
+     handleAPICallSubmit({
+         method: "post",
+         data: {
+             ...user,
+         },
+     });
 
-       
     }
 
     return (
         <div className="Container">
-            <div className="form-text">Sign up</div>
+            <div className="form-text"> Sign up </div>
             <div className ="form-div">
                 <form className="form"  onSubmit={handleOnSubmit}>
+                    {!isLoginRoute &&(
                   <div className="form-group-inline">
                     <div className="inline-container">
                         <label htmlFor="firstName">First Name</label>
@@ -37,6 +53,8 @@ function auth(props) {
                         name="firstName"
                         value={firstName}
                         onChange={handleFirstNameChange}
+                        error={firstNameIsError}
+                        errormessage={firstNameErrorMessage}
                         />
                     </div>
                     <div className="inline-container">
@@ -47,9 +65,13 @@ function auth(props) {
                             name="lastName"
                             value={lastName}
                             onChange={handleLastNameChange}
+                            error={lastNameIsError}
+                            errormessage={lastNameErrorMessage}
                             />
                     </div>
                  </div>
+                    )}
+                    {!isLoginRoute && (
                     <div className="form-group">
                         <div className="block-container">
                         <label htmlFor="email">Email</label>
@@ -62,6 +84,7 @@ function auth(props) {
                         />
                         </div>
                     </div>
+                    )}
                     <div className="form-group">
                         <div className="block-container">
                             <label htmlFor="username">Username</label>
@@ -86,6 +109,7 @@ function auth(props) {
                             />
                         </div>
                     </div>
+                    {!isLoginRoute && (
                     <div className="form-group">
                         <div className="block-container">
                             <label htmlFor="confirmPassword">Confirm Password</label>
@@ -99,6 +123,7 @@ function auth(props) {
                             />
                         </div>
                     </div>
+                    )}
                     <div className="button-container">
                         <button type="submit">{buttonTitle}</button>
                     </div>
