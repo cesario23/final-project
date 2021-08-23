@@ -48,6 +48,7 @@ function HandleFetch(url) {
         try{
             let response = await axios(baseURL + url, requestOptionObj);
             console.log(response);
+            console.log(response.data.message)
 
             if(response.data.message === "user created"){
                 setResponse(response.data.message);

@@ -1,3 +1,4 @@
+import { ConfirmationNumber } from '@material-ui/icons';
 import React from 'react'
 import ChangeInput from '../../components/Hooks/Inputs'
 import HandleFetch from '../Hooks/handleFetch'
@@ -53,9 +54,10 @@ function auth(props) {
                         name="firstName"
                         value={firstName}
                         onChange={handleFirstNameChange}
-                        error={firstNameIsError}
-                        errormessage={firstNameErrorMessage}
                         />
+                    </div>
+                    <div className="error">
+                        {firstNameIsError ?? firstNameErrorMessage}
                     </div>
                     <div className="inline-container">
                             <label htmlFor="lastName">Last Name</label>
@@ -65,9 +67,10 @@ function auth(props) {
                             name="lastName"
                             value={lastName}
                             onChange={handleLastNameChange}
-                            error={lastNameIsError}
-                            errormessage={lastNameErrorMessage}
                             />
+                    </div>
+                    <div className="error">
+                        {lastNameIsError ?? lastNameErrorMessage}
                     </div>
                  </div>
                     )}
@@ -83,6 +86,9 @@ function auth(props) {
                         onChange={handleEmailChange}
                         />
                         </div>
+                        <div className="error">
+                            {emailIsError ?? emailErrroMessage}
+                        </div>
                     </div>
                     )}
                     <div className="form-group">
@@ -96,6 +102,9 @@ function auth(props) {
                             onChange={handleUsernameChange}
                             />
                         </div>
+                        <div className="error">
+                            {usernameIsError ?? usernameErrorMessage}
+                        </div>
                     </div>
                     <div className="form-group">
                         <div className="block-container">
@@ -107,6 +116,9 @@ function auth(props) {
                             value={password}
                             onChange={handlePasswordChange}
                             />
+                        </div>
+                        <div className="error">
+                            {passwordIsError ?? passwordErrorMessage}
                         </div>
                     </div>
                     {!isLoginRoute && (
@@ -122,10 +134,20 @@ function auth(props) {
 
                             />
                         </div>
+                        <div className="error">
+                            {confirmPasswordIsError ?? confirmPasswordErrorMessage}
+                        </div>
                     </div>
                     )}
                     <div className="button-container">
-                        <button type="submit">{buttonTitle}</button>
+                        <button type="submit"
+                        disabled = {
+                            isLoginRoute
+                            ? isEmailDisabled || isPasswordDisabled
+                            : isEmailDisabled || isPasswordDisabled
+                            || isUsernameDisabled
+                        }
+                        >{buttonTitle}</button>
                     </div>
                 </form>
             </div>

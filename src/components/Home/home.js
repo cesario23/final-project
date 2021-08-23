@@ -31,7 +31,10 @@ function Home() {
 
         handleAnimeFetch(search)
     }
-
+    
+    function handleCardOnCLick(){
+        
+    }
 
     return (
         <div>
@@ -50,12 +53,17 @@ function Home() {
             />
             <button onClick={handleOnClick}>Search</button>
             </div>
-            <div className= "list">
+            <div className= "list" style={{display:"flex", flexWrap:"wrap"}}>
                 {animeList.map(anime => (
-                    <div className="anime-card">
+                    <div className="card">
                       {anime.title}
+                      <div className="image">
+                    
+                          <img src={anime.image_url} />
+                    
+                      </div>
                     </div>
-                    ))}
+                 ))}
             </div>
         </div>
     )

@@ -6,6 +6,7 @@ import Sidebar from './components/Sidebar/Sidebar'
 
 const Home = React.lazy(() => import("./components/Home/Home"));
 const Auth = React.lazy(() => import("./components/Auth/auth"));
+const Card = React.lazy(() => import("./components/Card/Card"));
 
 
 function MainRouter(){
@@ -26,6 +27,7 @@ function MainRouter(){
         </Switch>
         </div>
         </div>
+        <Route exact path="/card" component={Card}/>
         </React.Fragment>
     
     )

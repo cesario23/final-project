@@ -35,7 +35,7 @@ function Navbar() {
         <div className={classes.root}>
             <AppBar position="static">
                 <Toolbar>
-                    <Typography>
+                    <Typography variant="h6" className={classes.title}>
                         <Link to="/">Home</Link>
                     </Typography>
 
