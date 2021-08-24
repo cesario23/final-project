@@ -4,6 +4,7 @@ export const AuthContext = createContext({});
 
 const initialState={
     user: null,
+    card: {},
 };
 
 function reducer(state, action){
@@ -19,6 +20,16 @@ function reducer(state, action){
                 return{
                     user: null,
                 };
+            
+            case "CARD":
+                return {
+                    card: {
+                        name: action.card.name,
+                        picture: action.card.picture, 
+                        description: action.card.description,
+                        
+                    }
+                }
                 default:
                     return state;
     }

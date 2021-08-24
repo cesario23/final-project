@@ -5,10 +5,10 @@ import {AuthContext} from '../../Context/AuthContext'
 import checkAuthCookie from '../Hooks/checkAuthCookie'
 
 function PrivateRoute({ component: Component, ...rest}) {
-    const {state: user} = useContext(AuthContext);
+    const {state: user, state: card} = useContext(AuthContext);
     const {checkIfCookieExist} = checkAuthCookie()
 
-    console.log(user)
+console.log(user)
     return (
         <Route
         {...rest}

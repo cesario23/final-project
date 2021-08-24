@@ -24,11 +24,11 @@ function MainRouter(){
             <Route exact path="/login" component={Auth}/>
             <Route exact path="/logout" render={() => <Redirect to="/login"/>}/>
             <Route exact path="/" component= {Home}/>
+            <Route exact path="/card" component={Card}/>
         </Switch>
         </div>
         </div>
-        <Route exact path="/card" component={Card}/>
-        </React.Fragment>
+         </React.Fragment>
     
     )
 }
